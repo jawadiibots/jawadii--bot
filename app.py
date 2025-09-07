@@ -212,4 +212,7 @@ def plot_levels_image(analysis_result, width=1400, height=800):
     if advice: ax.text(0.01, -0.12, advice, transform=ax.transAxes, fontsize=10, va='top')
     buf = io.BytesIO(); plt.tight_layout(rect=[0,0.02,1,0.95]); fig.savefig(buf, format='png'); plt.close(fig); buf.seek(0); return buf
 
+if __name__ == "__main__":
+    import asyncio
+    asyncio.run(run_bot())
 # Note: truncated / minor fixes may be required when running. Full code available in the repository created by this package.
