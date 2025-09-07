@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+print("🚀 Bot container started, connecting to Telegram...")#!/usr/bin/env python3
 """
 app.py - Trading Bot v4 (Fully Advanced)
 Features...
