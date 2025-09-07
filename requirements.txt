@@ -1,0 +1,8 @@
+python-telegram-bot==20.5
+tradingview_ta>=3.3.0
+ccxt>=3.0.80
+pandas>=2.0.0
+numpy>=1.23.0
+matplotlib>=3.5.0
+Pillow>=8.0.0
+gunicorn>=20.1.0
