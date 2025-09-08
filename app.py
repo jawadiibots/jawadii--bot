@@ -1,4 +1,4 @@
-print("🚀 Bot container started, connecting to Telegram...")#!/usr/bin/env python3
+#!/usr/bin/env python3
 """
 app.py - Trading Bot v4 (Fully Advanced)
 Features...
@@ -32,11 +32,13 @@ logger = logging.getLogger(__name__)
 def save_json(path, data):
     with open(path, "w") as f:
         json.dump(data, f, indent=2, default=str)
+
 def load_json(path, default):
     if os.path.exists(path):
         with open(path, "r") as f:
             return json.load(f)
     return default
+
 def safe_float(x):
     try:
         return float(x)
@@ -58,6 +60,7 @@ def fetch_ohlcv_ccxt(symbol_ccxt: str, timeframe='1h', limit=OHLCV_LIMIT):
 
 def compute_ema(series, period):
     return series.ewm(span=period, adjust=False).mean()
+
 def compute_rsi(series, period=14):
     delta = series.diff()
     up = delta.clip(lower=0)
@@ -67,6 +70,7 @@ def compute_rsi(series, period=14):
     rs = ma_up / (ma_down.replace(0, 1e-9))
     rsi = 100 - (100 / (1 + rs))
     return rsi
+
 def compute_macd(series, fast=12, slow=26, signal=9):
     ema_fast = compute_ema(series, fast)
     ema_slow = compute_ema(series, slow)
@@ -74,12 +78,14 @@ def compute_macd(series, fast=12, slow=26, signal=9):
     signal_line = macd.ewm(span=signal, adjust=False).mean()
     hist = macd - signal_line
     return macd, signal_line, hist
+
 def compute_atr(df, period=ATR_PERIOD):
     high = df['high']; low = df['low']; close = df['close']
     tr1 = high - low; tr2 = (high - close.shift()).abs(); tr3 = (low - close.shift()).abs()
     tr = pd.concat([tr1, tr2, tr3], axis=1).max(axis=1)
     atr = tr.rolling(window=period, min_periods=1).mean()
     return atr
+
 
 def generate_advice(analysis):
     side = analysis.get("side", "wait")
@@ -103,6 +109,7 @@ def generate_advice(analysis):
     title = "💡 Trade Advice"
     advice = title + "\n" + "\n".join(f"- {l}" for l in adv_lines)
     return advice
+
 
 def analyze_symbol_advanced(tv_symbol: str, timeframes=['15m','1h','4h']):
     if ':' in tv_symbol:
@@ -178,6 +185,7 @@ def analyze_symbol_advanced(tv_symbol: str, timeframes=['15m','1h','4h']):
     analysis["advice"] = generate_advice(analysis)
     return analysis
 
+
 def plot_levels_image(analysis_result, width=1400, height=800):
     df = None
     if analysis_result.get("ohlcv"):
@@ -207,12 +215,12 @@ def plot_levels_image(analysis_result, width=1400, height=800):
         ax.add_patch(plt.Rectangle((0.85, tp - 0.0006*tp), 0.15, 0.0012*tp, transform=ax.get_xaxis_transform(), alpha=0.22, color='green'))
         ax.text(0.99, tp, f"TP{i+1}", transform=ax.get_xaxis_transform(), ha='right', va='center', color='green', fontsize=10)
     ax.text(0.01,0.98, f"Side: {side}", transform=ax.transAxes, fontsize=12, bbox=dict(facecolor='black', alpha=0.6, pad=6), color='white')
-    ax.set_title(f"{symbol} — Entry:{entry} SL:{sl}"); ax.set_ylabel("Price"); ax.grid(True, linestyle=':', linewidth=0.4'); ax.legend(loc='upper left', fontsize='small', ncol=1)
+    ax.set_title(f"{symbol} — Entry:{entry} SL:{sl}")
+    ax.set_ylabel("Price")
+    ax.grid(True, linestyle=':', linewidth=0.4)
+    ax.legend(loc='upper left', fontsize='small', ncol=1)
     advice = analysis_result.get('advice','')
     if advice: ax.text(0.01, -0.12, advice, transform=ax.transAxes, fontsize=10, va='top')
     buf = io.BytesIO(); plt.tight_layout(rect=[0,0.02,1,0.95]); fig.savefig(buf, format='png'); plt.close(fig); buf.seek(0); return buf
 
-if __name__ == "__main__":
-    import asyncio
-    asyncio.run(run_bot())
 # Note: truncated / minor fixes may be required when running. Full code available in the repository created by this package.
