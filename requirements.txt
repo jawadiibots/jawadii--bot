@@ -1,8 +1,8 @@
 python-telegram-bot==20.5
-pandas==2.2.2
+pandas==2.2
 numpy==1.26.4
-matplotlib==3.8.1
-tradingview-ta==1.9.42
+matplotlib==3.8
+tradingview-ta>=3.2.10
 python-dotenv==1.1.1
 feedparser==6.0.10
 python-dateutil==2.8.2
