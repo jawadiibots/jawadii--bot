@@ -1,28 +1,4 @@
-# Python cache / build files
 __pycache__/
 *.pyc
-*.pyo
-*.pyd
-*.db
-*.sqlite3
-
-# Virtual environments
-.venv/
-env/
-venv/
-
-# Local config / secrets
 .env
-*.env
-*.secret
-*.token
-
-# Logs
-*.log
-
-# Trade history (local only)
-trades_v4.json
-
-# Jupyter / misc
-.ipynb_checkpoints/
-.DS_Store
+.venv/
