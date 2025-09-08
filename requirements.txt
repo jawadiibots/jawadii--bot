@@ -7,3 +7,4 @@ python-dotenv==1.1.1
 feedparser==6.0.10
 python-dateutil==2.8.2
 gunicorn>=20.1.0
+ccxt>=3.0.0
